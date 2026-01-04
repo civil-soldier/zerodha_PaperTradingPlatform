@@ -72,6 +72,10 @@ const UserSchema = new mongoose.Schema(
     },
 
     lastLoginAt: Date,
+
+    // 🔑 FORGOT PASSWORD (NEW)
+    resetPasswordToken: String,
+    resetPasswordExpiry: Date,
   },
   { timestamps: true }
 );
@@ -79,5 +83,6 @@ const UserSchema = new mongoose.Schema(
 // 🔥 Indexes for performance
 UserSchema.index({ username: 1 });
 UserSchema.index({ mobile: 1 });
+UserSchema.index({ email: 1 });
 
-module.exports = UserSchema;
+module.exports = mongoose.model("User", UserSchema);

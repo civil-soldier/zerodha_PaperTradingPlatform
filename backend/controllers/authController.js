@@ -1,8 +1,9 @@
 const UserModel = require("../model/UserModel");
-
+const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const sendEmailOtp = require("../utils/sendEmailOtp");
+const sendEmail = require("../utils/sendResetPasswordEmail");
 console.log("UserModel:", UserModel);
 
 /* =========================
@@ -297,6 +298,66 @@ const login = async (req, res) => {
   }
 };
 
+const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "User with this email does not exist" });
+    }
+
+    const resetToken = crypto.randomBytes(32).toString("hex");
+
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpiry = Date.now() + 15 * 60 * 1000;
+    await user.save();
+
+    const resetLink = `http://localhost:3001/reset-password/${resetToken}`;
+
+    // ✅ correct util usage
+    await sendEmail(user.email, resetLink);
+
+    res.json({ message: "Password reset link sent to email" });
+  } catch (error) {
+    console.error("FORGOT PASSWORD ERROR:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+const resetPassword = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    const user = await UserModel.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpiry: { $gt: Date.now() },
+    }).select("+password");
+
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: "Invalid or expired reset link" });
+    }
+
+    user.password = await bcrypt.hash(password, 10);
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpiry = undefined;
+
+    await user.save();
+
+    res.json({ message: "Password reset successful" });
+  } catch (error) {
+    console.error("RESET PASSWORD ERROR:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
 module.exports = {
   sendMobileOtp,
   verifyMobileOtp,
@@ -304,4 +365,6 @@ module.exports = {
   verifyEmailOtp,
   createCredentials,
   login,
+  forgotPassword,
+  resetPassword,
 };
