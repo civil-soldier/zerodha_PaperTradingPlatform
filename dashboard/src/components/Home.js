@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Login from "./Login";
 import ForgotPassword from "./ForgotPassword";
 import ResetPassword from "./ResetPassword";
@@ -7,16 +7,12 @@ import DashboardLayout from "./DashboardLayout";
 const Home = () => {
   return (
     <Routes>
-{/* Landing DEAD */}
-  <Route path="/" element={<Navigate to="/login" replace />} />
-
-      {/* Login FIRST */}
+      {/* Public routes */}
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
-<Route path="/reset-password/:token" element={<ResetPassword />} />
+      <Route path="/reset-password/:token" element={<ResetPassword />} />
 
-
-      {/* Protected dashboard */}
+      {/* Dashboard (protected later) */}
       <Route path="/*" element={<DashboardLayout />} />
     </Routes>
   );

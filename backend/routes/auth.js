@@ -1,4 +1,7 @@
-router.delete("/auth/lead", async (req, res) => {
+const authMiddleware = require("../middleware/authMiddleware");
+
+
+router.delete("/auth/lead", authMiddleware, async (req, res) => {
   try {
     const { email, mobile } = req.body;
 

@@ -22,33 +22,27 @@
 
 /* Avatar */
 .avatar {
-  width: 72px;
-  height: 72px;
   margin: 0 auto 16px;
   background: #fde8e4;
-  color: #ff5722;
   border-radius: 50%;
-  font-size: 24px;
   font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50%;
+}
+
+.avatar i {
+  font-size: 73px;
+  color: #ff5722;
 }
 
 /* User ID */
 .user-id {
   font-size: 18px;
   font-weight: 500;
-  margin-bottom: 6px;
+  margin-bottom: 18px;
     color: #fff;
-}
-
-/* Change user */
-.change-user {
-  font-size: 13px;
-  color: #ff5722;
-  cursor: pointer;
-  margin-bottom: 20px;
 }
 
 /* Password input */
@@ -60,6 +54,7 @@
   border: 1px solid #ddd;
   outline: none;
   margin-bottom: 20px;
+  box-sizing: border-box;
 }
 
 .password-input:focus {
@@ -76,6 +71,7 @@
   color: #fff;
   font-size: 15px;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .login-btn:hover {
