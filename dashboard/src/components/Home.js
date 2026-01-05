@@ -7,6 +7,9 @@ import DashboardLayout from "./DashboardLayout";
 const Home = () => {
   return (
     <Routes>
+{/* Landing DEAD */}
+  <Route path="/" element={<Navigate to="/login" replace />} />
+
       {/* Login FIRST */}
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />

@@ -1,6 +1,8 @@
 import "./Login.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
+
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -9,24 +11,36 @@ const ResetPassword = () => {
   const [confirm, setConfirm] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleReset = () => {
-    if (!password || !confirm) {
-      setMessage("All fields are required");
-      return;
-    }
+  const handleReset = async () => {
+  if (!password || !confirm) {
+    setMessage("All fields are required");
+    return;
+  }
 
-    if (password !== confirm) {
-      setMessage("Passwords do not match");
-      return;
-    }
+  if (password !== confirm) {
+    setMessage("Passwords do not match");
+    return;
+  }
 
-    // later backend call
+  try {
+    setMessage("Resetting password...");
+
+    await axios.post(
+      `http://localhost:3002/auth/reset-password/${token}`,
+      { password }
+    );
+
     setMessage("Password reset successful");
 
     setTimeout(() => {
       navigate("/login");
     }, 1500);
-  };
+  } catch (err) {
+    console.error(err);
+    setMessage("Invalid or expired reset link");
+  }
+};
+
 
   return (
     <div className="login-page">

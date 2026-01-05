@@ -1,6 +1,7 @@
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useEffect } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -11,8 +12,23 @@ const Login = () => {
 
   const handleLogin = () => {
     // TEMP: fake login
-    navigate("/");
+    navigate("/" , { replace: true });
   };
+
+  useEffect(() => {
+  // Login page pe history lock
+  window.history.pushState(null, "", window.location.href);
+
+  const handleBack = () => {
+    window.history.pushState(null, "", window.location.href);
+  };
+
+  window.addEventListener("popstate", handleBack);
+
+  return () => {
+    window.removeEventListener("popstate", handleBack);
+  };
+}, []);
 
   return (
     <div className="login-page">
@@ -43,6 +59,11 @@ const Login = () => {
 
       </div>
 
+      <div style={{ marginTop: "12px", fontSize: "12px", color: "#888" }}>
+  Secure login enabled. Use Logout to exit.
+</div>
+
+
       <div className="apps">
         <img src="/android.svg " alt="Android App" />
         <img src="/apple.svg" alt="iOS App" />
@@ -63,8 +84,8 @@ const Login = () => {
         <p> <a href="https://www.zerodha.com/dispute-resolution">Dispute Resolution</a> | <a href="https://www.sebi.gov.in/sebiweb/other/OtherAction.do?do=showScore">SEBI SCORES</a></p>
         <br></br>
         <p className="version">v3.0.0</p>
-        </div>
-    </div>
+      </div>
+  </div>
   );
 };
 

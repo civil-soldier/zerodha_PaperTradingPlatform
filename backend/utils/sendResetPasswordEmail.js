@@ -29,6 +29,9 @@ const sendResetPasswordEmail = async (email, resetLink) => {
       `,
     });
 
+    await transporter.verify();
+console.log("SMTP verified, ready to send");
+
     console.log("✅ Reset password email sent");
   } catch (err) {
     console.error("❌ RESET EMAIL FAILED:", err);

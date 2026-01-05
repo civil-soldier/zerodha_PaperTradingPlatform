@@ -309,10 +309,23 @@ const forgotPassword = async (req, res) => {
         .json({ message: "User with this email does not exist" });
     }
 
+    // ⛔ Rate limit: 5 minutes
+if (
+  user.lastResetEmailAt &&
+  Date.now() - user.lastResetEmailAt.getTime() < 5 * 60 * 1000
+) {
+  return res.status(429).json({
+    message: "Please wait 5 minutes before requesting another reset email",
+  });
+}
+
+
+
     const resetToken = crypto.randomBytes(32).toString("hex");
 
     user.resetPasswordToken = resetToken;
     user.resetPasswordExpiry = Date.now() + 15 * 60 * 1000;
+    user.lastResetEmailAt = new Date();
     await user.save();
 
     const resetLink = `http://localhost:3001/reset-password/${resetToken}`;
