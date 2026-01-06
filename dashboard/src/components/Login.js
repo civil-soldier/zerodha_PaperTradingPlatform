@@ -22,11 +22,15 @@ const Login = () => {
       });
 
       if (res.data.success) {
-        const { token } = res.data;
+        const { token, user } = res.data;
 
         // Save auth token
         localStorage.setItem("token", token);
-        
+localStorage.setItem("user_id", user._id);
+localStorage.setItem("user_name", user.name);
+localStorage.setItem("user_email", user.email);
+localStorage.setItem("user_username", user.username);
+
 
         // Go to dashboard
         navigate("/", { replace: true });

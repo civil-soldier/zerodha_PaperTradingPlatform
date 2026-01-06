@@ -1258,6 +1258,167 @@ hr {
   cursor: pointer;
 }
 
+/* ===== PROFILE MENU ===== */
+
+.profile {
+  position: relative;
+  margin-top: 16px;
+  cursor: pointer;
+}
+
+.profile-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #ff6a3d;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.username {
+  font-size: 13px;
+  color: #eaeaea;
+}
+
+.arrow {
+  font-size: 12px;
+  color: #aaa;
+  transition: transform 0.2s ease;
+}
+
+.arrow.rotate {
+  transform: rotate(180deg);
+}
+
+/* ===== DROPDOWN ===== */
+
+.profile-dropdown {
+  position: absolute;
+  right: 0;
+  top: 110%;
+  width: 220px;
+  background: #1a1f24;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+}
+
+.profile-dropdown .name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.profile-dropdown .email {
+  font-size: 12px;
+  color: #aaa;
+  margin-bottom: 12px;
+  word-break: break-all;
+}
+
+.profile-dropdown button {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 8px 0;
+  font-size: 13px;
+  color: #eaeaea;
+  cursor: pointer;
+}
+
+.profile-dropdown button:hover {
+  color: #ff6a3d;
+
+}
+
+.profile {
+  position: relative;
+}
+
+.profile-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #ff5722;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 42px;
+  right: 0;
+  width: 220px;
+  background: #1c2228;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  z-index: 1000;
+}
+
+.profile-dropdown .name {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.profile-dropdown .email {
+  font-size: 12px;
+  color: #9aa0a6;
+  margin-bottom: 10px;
+}
+
+.profile-dropdown button {
+  width: 100%;
+  background: none;
+  border: none;
+  color: #fff;
+  padding: 6px 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.profile-dropdown button:hover {
+  color: #ff5722;
+}
+
+.arrow {
+  transition: transform 0.2s ease;
+}
+
+.arrow.rotate {
+  transform: rotate(180deg);
+}
+
+
 
 
 

@@ -24,6 +24,8 @@
 .avatar {
   margin: 0 auto 16px;
   background: #fde8e4;
+  height: 72px;
+  width: 72px;
   border-radius: 50%;
   font-weight: 600;
   display: flex;
@@ -33,7 +35,7 @@
 }
 
 .avatar i {
-  font-size: 73px;
+  font-size: 72px;
   color: #ff5722;
 }
 
