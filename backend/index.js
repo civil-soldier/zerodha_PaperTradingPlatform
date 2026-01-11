@@ -27,10 +27,10 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(
   cors({
     origin: [
-      "http://localhost:3001",        // dashboard local
-      "http://localhost:3000",        // landing local
-      "https://your-dashboard.vercel.app", // future dashboard
-      "https://your-landing.vercel.app"    // future landing
+      "http://localhost:3001",
+      "http://localhost:3000",
+      "https://zerodha-paper-trading-platform-2k2dwm0om.vercel.app",
+      "https://zerodha-landing.vercel.app"   // (we will deploy landing here)
     ],
     credentials: true
   })
