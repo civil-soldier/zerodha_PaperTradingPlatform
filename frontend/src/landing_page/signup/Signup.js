@@ -15,7 +15,7 @@ function Signup() {
       return;
     }
 
-    await axios.post("http://localhost:3002/auth/mobile", { mobile });
+    await axios.post("/auth/mobile", { mobile });
 
     navigate("/signup/otp", { state: { mobile } });
   } catch (err) {

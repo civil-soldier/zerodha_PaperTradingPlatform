@@ -29,7 +29,7 @@ const Funds = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:3002/funds/add", {
+      const res = await axios.post("/funds/add", {
         amount: Number(amount),
       });
 
@@ -57,7 +57,7 @@ const Funds = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:3002/funds/withdraw", {
+      const res = await axios.post("/funds/withdraw", {
         amount: Number(amount),
       });
 

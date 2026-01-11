@@ -56,7 +56,7 @@ const CredentialsPage = () => {
       setLoading(true);
 
       const res = await axios.post(
-        "http://localhost:3002/auth/credentials",
+        "/auth/credentials",
         { mobile, username, password }
       );
 

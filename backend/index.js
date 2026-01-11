@@ -24,7 +24,18 @@ const app = express();
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3001",        // dashboard local
+      "http://localhost:3000",        // landing local
+      "https://your-dashboard.vercel.app", // future dashboard
+      "https://your-landing.vercel.app"    // future landing
+    ],
+    credentials: true
+  })
+);
+
 app.use(bodyParser.json());
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);

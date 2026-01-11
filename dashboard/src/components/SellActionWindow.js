@@ -52,7 +52,7 @@ const SellActionWindow = ({ uid }) => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3002/newOrder",
+        "/newOrder",
         {
           name: uid,
           qty,

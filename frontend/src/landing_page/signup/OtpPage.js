@@ -33,10 +33,10 @@ const handleVerifyOtp = async () => {
     let payload = {};
 
     if (type === "mobile") {
-      url = "http://localhost:3002/auth/verify-mobile-otp";
+      url = "/auth/verify-mobile-otp";
       payload = { mobile, otp: otp.join("") };
     } else {
-      url = "http://localhost:3002/auth/verify-email-otp";
+      url = "/auth/verify-email-otp";
       payload = { mobile, otp: otp.join("") };
     }
 

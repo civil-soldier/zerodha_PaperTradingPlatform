@@ -1,11 +1,8 @@
 import React, { useState , useEffect } from "react";
 import axios from "../api/axios";
 
-
-
 import BuyActionWindow from "./BuyActionWindow";
 import SellActionWindow from "./SellActionWindow";
-
 
 const GeneralContext = React.createContext({
   holdings: [],
@@ -26,8 +23,6 @@ export const GeneralContextProvider = (props) => {
   const [funds, setFunds] = useState([]);
   const [orders, setOrders] = useState([]);
 
-
-
   const handleOpenBuyWindow = (uid) => {
     setIsBuyWindowOpen(true);
     setSelectedStockUID(uid);
@@ -39,41 +34,43 @@ export const GeneralContextProvider = (props) => {
   };
 
   const handleOpenSellWindow = (uid) => {
-  setIsSellWindowOpen(true);
-  setSelectedStockUID(uid);
-};
+    setIsSellWindowOpen(true);
+    setSelectedStockUID(uid);
+  };
 
-const handleCloseSellWindow = () => {
-  setIsSellWindowOpen(false);
-  setSelectedStockUID("");
-};
+  const handleCloseSellWindow = () => {
+    setIsSellWindowOpen(false);
+    setSelectedStockUID("");
+  };
 
-const fetchHoldings = async () => {
-  const res = await axios.get("http://localhost:3002/allHoldings");
-  setHoldings(res.data);
-};
+  // 🔥 PRODUCTION SAFE API CALLS
 
-const fetchPositions = async () => {
-  const res = await axios.get("http://localhost:3002/allPositions");
-  setPositions(res.data);
-};
+  const fetchHoldings = async () => {
+    const res = await axios.get("/allHoldings");
+    setHoldings(res.data);
+  };
 
-const fetchFunds = async () => {
-  const res = await axios.get("http://localhost:3002/funds");
-  setFunds(res.data);
-};
+  const fetchPositions = async () => {
+    const res = await axios.get("/allPositions");
+    setPositions(res.data);
+  };
 
-const fetchOrders = async () => {
-  const res = await axios.get("http://localhost:3002/orders");
-  setOrders(res.data);
-};
+  const fetchFunds = async () => {
+    const res = await axios.get("/funds");
+    setFunds(res.data);
+  };
+
+  const fetchOrders = async () => {
+    const res = await axios.get("/orders");
+    setOrders(res.data);
+  };
 
   useEffect(() => {
-  fetchHoldings();
-  fetchPositions();
-  fetchFunds();
-  fetchOrders();
-}, []);
+    fetchHoldings();
+    fetchPositions();
+    fetchFunds();
+    fetchOrders();
+  }, []);
 
   return (
     <GeneralContext.Provider

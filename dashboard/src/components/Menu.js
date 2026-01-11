@@ -3,6 +3,8 @@ import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { LANDING_URL } from "../config";
+
 
 const Menu = () => {
   const [selectedMenu, setSelectedMenu] = useState(0);
@@ -143,14 +145,14 @@ const initials = name
       <p className="name">{name}</p>
       <p className="email">{email}</p>
 
-      <button onClick={() => window.location.href = "http://localhost:3000/support"}>
+      <button onClick={() => window.location.href = `${LANDING_URL}/support`}>
         Support
       </button>
 
       <button
         onClick={() => {
           localStorage.clear();
-          window.location.href = "http://localhost:3000/";
+          window.location.href = `${LANDING_URL}/`;
         }}
       >
         Logout

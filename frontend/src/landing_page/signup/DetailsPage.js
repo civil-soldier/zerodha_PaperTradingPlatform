@@ -104,7 +104,7 @@ const DetailsPage = () => {
       formData.append("profileImage", image);
 
       const res = await axios.post(
-        "http://localhost:3002/user/details",
+        "/user/details",
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );

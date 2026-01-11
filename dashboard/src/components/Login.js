@@ -2,6 +2,7 @@ import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "../api/axios";
+import { LANDING_URL } from "../config";
 
 
 const Login = () => {
@@ -17,7 +18,7 @@ const Login = () => {
         return;
       }
 
-      const res = await axios.post("http://localhost:3002/auth/login", {
+      const res = await axios.post("/auth/login", {
         username,
         password,
       });
@@ -91,14 +92,14 @@ localStorage.setItem("user_username", user.username);
       </div>
 
       {/* Logo */}
-      <a className="logo" href="http://localhost:3000/">
+      <a className="logo" href={`${LANDING_URL}/`}>
         <img src="/zerodha-logo.svg" alt="Zerodha Logo" />
       </a>
 
       {/* Footer */}
       <div className="login-footer">
         <span>Don&apos;t have an account? </span>
-        <a href="http://localhost:3000/signup">Signup now!</a>
+        <a href={`${LANDING_URL}/signup`}>Signup now!</a>
       </div>
 
       {/* Disclaimer */}

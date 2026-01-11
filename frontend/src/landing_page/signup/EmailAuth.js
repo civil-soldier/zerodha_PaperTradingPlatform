@@ -25,7 +25,7 @@ const mobile = location.state?.mobile;
     setLoading(true);
 
     const res = await axios.post(
-      "http://localhost:3002/auth/email",
+      "/auth/email",
       { mobile, name, email }
     );
 

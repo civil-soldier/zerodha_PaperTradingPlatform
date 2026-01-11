@@ -26,7 +26,7 @@ const WatchList = () => {
   useEffect(() => {
   const fetchPrices = async () => {
     try {
-      const res = await axios.get("http://localhost:3002/live-prices");
+      const res = await axios.get("/live-prices");
 
       setPrevPrices((prev) => {
         // keep previous snapshot

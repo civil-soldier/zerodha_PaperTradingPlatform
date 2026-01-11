@@ -2,6 +2,7 @@ import "./Login.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import axios from "../api/axios";
+import { LANDING_URL } from "../config";
 
 
 
@@ -27,7 +28,7 @@ const ResetPassword = () => {
     setMessage("Resetting password...");
 
     await axios.post(
-      `http://localhost:3002/auth/reset-password/${token}`,
+      `/auth/reset-password/${token}`,
       { password }
     );
 
@@ -80,13 +81,13 @@ const ResetPassword = () => {
         <img src="/apple.svg" alt="iOS App" />
       </div>
 
-      <a className="logo" href="http://localhost:3000/">
+      <a className="logo" href={`${LANDING_URL}/`}>
         <img src="/zerodha-logo.svg" alt="Zerodha Logo" />
       </a>
 
       <div className="login-footer">
         <span>Don&apos;t have an account? </span>
-        <a href="http://localhost:3000/signup">Signup now!</a>
+        <a href={`${LANDING_URL}/signup`}>Signup now!</a>
       </div>
 
       <div className="disclaimer">
