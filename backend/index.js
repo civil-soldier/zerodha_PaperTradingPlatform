@@ -27,14 +27,16 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(
   cors({
     origin: [
-      "http://localhost:3001",
-      "http://localhost:3000",
-      "https://zerodha-paper-trading-platform-2k2dwm0om.vercel.app",
-      "https://zerodha-landing.vercel.app"   // (we will deploy landing here)
+      "http://localhost:3000",      // Landing local
+      "http://localhost:3001",      // Dashboard local
+      "https://zerodha-paper-trading-platform.vercel.app"
     ],
-    credentials: true
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"]
   })
 );
+
 
 app.use(bodyParser.json());
 app.use("/auth", authRoutes);
