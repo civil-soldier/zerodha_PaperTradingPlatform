@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import api from "../../api/api";
 import { useNavigate } from "react-router-dom";
 
 const CredentialsPage = () => {
@@ -55,7 +55,7 @@ const CredentialsPage = () => {
     try {
       setLoading(true);
 
-      const res = await axios.post(
+      const res = await api.post(
         "/auth/credentials",
         { mobile, username, password }
       );

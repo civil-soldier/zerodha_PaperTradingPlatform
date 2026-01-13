@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import axios from "axios";
+import axios from "../../api/api";
 
 
 function Signup() {

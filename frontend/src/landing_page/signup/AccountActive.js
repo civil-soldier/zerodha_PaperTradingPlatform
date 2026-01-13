@@ -46,10 +46,8 @@ const AccountActive = () => {
     : "U";
 
 const handleLogin = () => {
-  window.location.href = "http://localhost:3001/login";
+  window.location.href = `${process.env.REACT_APP_DASHBOARD_URL}/login`;
 };
-
-
 
   return (
     <div className="account-active-wrapper">
