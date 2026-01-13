@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import OtpInput from "./OtpInput";
-import axios from "axios";
+import axios from "../../api/api";
 
 function OtpPage({ type = "mobile" }) {
   const [otp, setOtp] = useState(Array(6).fill(""));
