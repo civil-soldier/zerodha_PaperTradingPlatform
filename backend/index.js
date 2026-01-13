@@ -24,19 +24,31 @@ const app = express();
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-app.use(
-  cors({
-    origin: [
-      "http://localhost:3000",      // Landing local
-      "http://localhost:3001",      // Dashboard local
-      "https://zerodha-paper-trading-platform.vercel.app"
-    ],
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-  })
-);
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "https://zerodha-paper-trading-platform.vercel.app",
+  "https://zerodha-paper-trading-platform-kfrfcr62m.vercel.app",
+  "https://zerodha-paper-trading-platform-2k2dwm0om.vercel.app"
+];
 
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    return callback(new Error("CORS blocked: " + origin));
+  },
+  credentials: true,
+  methods: ["GET","POST","PUT","DELETE","OPTIONS"],
+  allowedHeaders: ["Content-Type","Authorization"]
+}));
+
+app.use((req, res, next) => {
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+});
 
 app.use(bodyParser.json());
 app.use("/auth", authRoutes);
