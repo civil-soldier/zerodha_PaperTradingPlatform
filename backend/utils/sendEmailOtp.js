@@ -1,22 +1,13 @@
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendEmailOtp = async (email, otp) => {
   try {
-    console.log("📧 Sending OTP to:", email);
-    console.log("🔐 OTP:", otp);
+    console.log("📧 Sending OTP via Resend to:", email);
 
-    // 🔹 Create transporter
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
-    // 🔹 Send mail
-    await transporter.sendMail({
-      from: `"Zerodha" <${process.env.EMAIL_USER}>`,
+    const data = await resend.emails.send({
+      from: "Zerodha <onboarding@resend.dev>",
       to: email,
       subject: "Your Zerodha Email OTP",
       html: `
@@ -27,10 +18,10 @@ const sendEmailOtp = async (email, otp) => {
       `,
     });
 
-    console.log("✅ Email sent successfully");
+    console.log("✅ OTP sent:", data.id);
   } catch (err) {
-    console.error("❌ EMAIL SEND FAILED:", err);
-    throw err; // VERY IMPORTANT
+    console.error("❌ RESEND OTP FAILED:", err);
+    throw err;
   }
 };
 
