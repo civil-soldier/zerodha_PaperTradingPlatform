@@ -327,17 +327,25 @@ text-decoration: none;
               <a href="#">Investor charter</a>
             </div>
 
-            <p
+            <div
               style={{
-                marginTop: "30px",
-                fontSize: "12px",
-                color: "#878787",
-                textAlign: "center",
                 width: "100%",
+                textAlign: "center",
+                marginTop: "60px",
+                paddingTop: "20px",
+                borderTop: "1px solid #e0e0e0",
               }}
             >
-              Built by <strong>Yash Kumar</strong>
-            </p>
+              <span
+                style={{
+                  fontSize: "12px",
+                  color: "#878787",
+                  letterSpacing: "0.5px",
+                }}
+              >
+                Built by <strong>Yash Kumar</strong>
+              </span>
+            </div>
           </div>
         </div>
       </div>
