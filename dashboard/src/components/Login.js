@@ -4,7 +4,6 @@ import { useState } from "react";
 import axios from "../api/axios";
 import { LANDING_URL } from "../config";
 
-
 const Login = () => {
   const navigate = useNavigate();
 
@@ -28,11 +27,10 @@ const Login = () => {
 
         // Save auth token
         localStorage.setItem("token", token);
-localStorage.setItem("user_id", user._id);
-localStorage.setItem("user_name", user.name);
-localStorage.setItem("user_email", user.email);
-localStorage.setItem("user_username", user.username);
-
+        localStorage.setItem("user_id", user._id);
+        localStorage.setItem("user_name", user.name);
+        localStorage.setItem("user_email", user.email);
+        localStorage.setItem("user_username", user.username);
 
         // Go to dashboard
         navigate("/", { replace: true });
@@ -45,7 +43,6 @@ localStorage.setItem("user_username", user.username);
   return (
     <div className="login-page">
       <div className="login-card">
-
         {/* Avatar */}
         <div className="avatar">
           <i className="fa-solid fa-circle-user"></i>
@@ -77,10 +74,7 @@ localStorage.setItem("user_username", user.username);
           Login
         </button>
 
-        <div
-          className="forgot"
-          onClick={() => navigate("/forgot-password")}
-        >
+        <div className="forgot" onClick={() => navigate("/forgot-password")}>
           Forgot user ID or password?
         </div>
       </div>
@@ -111,12 +105,22 @@ localStorage.setItem("user_username", user.username);
           <a href="https://www.mcxindia.com/">MCX</a> ‐ SEBI Reg. no.
         </p>
         <p>
-          INZ000031633 |{" "}
-          <a href="https://www.zerodha.com/cdsl">CDSL</a> ‐{" "}
+          INZ000031633 | <a href="https://www.zerodha.com/cdsl">CDSL</a> ‐{" "}
           <a href="https://www.sebi.gov.in/">SEBI</a> Reg. no. IN-DP-431-2019
         </p>
         <br />
         <p className="version">v3.0.0</p>
+        <p
+          style={{
+            marginTop: "8px",
+            fontSize: "10px",
+            color: "#5f6b7a",
+            textAlign: "center",
+            letterSpacing: "0.5px",
+          }}
+        >
+          Built by Yash Kumar
+        </p>
       </div>
     </div>
   );

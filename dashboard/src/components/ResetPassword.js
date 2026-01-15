@@ -4,8 +4,6 @@ import { useState } from "react";
 import axios from "../api/axios";
 import { LANDING_URL } from "../config";
 
-
-
 const ResetPassword = () => {
   const navigate = useNavigate();
   const { token } = useParams(); // future use
@@ -14,35 +12,31 @@ const ResetPassword = () => {
   const [message, setMessage] = useState("");
 
   const handleReset = async () => {
-  if (!password || !confirm) {
-    setMessage("All fields are required");
-    return;
-  }
+    if (!password || !confirm) {
+      setMessage("All fields are required");
+      return;
+    }
 
-  if (password !== confirm) {
-    setMessage("Passwords do not match");
-    return;
-  }
+    if (password !== confirm) {
+      setMessage("Passwords do not match");
+      return;
+    }
 
-  try {
-    setMessage("Resetting password...");
+    try {
+      setMessage("Resetting password...");
 
-    await axios.post(
-      `/auth/reset-password/${token}`,
-      { password }
-    );
+      await axios.post(`/auth/reset-password/${token}`, { password });
 
-    setMessage("Password reset successful");
+      setMessage("Password reset successful");
 
-    setTimeout(() => {
-      navigate("/login");
-    }, 1500);
-  } catch (err) {
-    console.error(err);
-    setMessage("Invalid or expired reset link");
-  }
-};
-
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
+    } catch (err) {
+      console.error(err);
+      setMessage("Invalid or expired reset link");
+    }
+  };
 
   return (
     <div className="login-page">
@@ -70,9 +64,7 @@ const ResetPassword = () => {
         </button>
 
         {message && (
-          <div style={{ marginTop: "15px", fontSize: "14px" }}>
-            {message}
-          </div>
+          <div style={{ marginTop: "15px", fontSize: "14px" }}>{message}</div>
         )}
       </div>
 
@@ -95,6 +87,17 @@ const ResetPassword = () => {
         <p>INZ000031633 | CDSL ‐ SEBI Reg. no. IN-DP-431-2019</p>
         <br />
         <p className="version">v3.0.0</p>
+        <p
+          style={{
+            marginTop: "8px",
+            fontSize: "10px",
+            color: "#5f6b7a",
+            textAlign: "center",
+            letterSpacing: "0.5px",
+          }}
+        >
+          Built by Yash Kumar
+        </p>
       </div>
     </div>
   );
