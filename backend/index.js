@@ -599,6 +599,7 @@ mongoose
   .connect(uri)
   .then(() => {
     console.log("✅ MongoDB connected");
+    require("./cron"); // Initialize cron jobs
     app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
   })
   .catch((err) => {
