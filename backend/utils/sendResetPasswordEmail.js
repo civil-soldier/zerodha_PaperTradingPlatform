@@ -7,7 +7,7 @@ const sendResetPasswordEmail = async (email, resetLink) => {
     console.log("📧 Sending reset email via Resend to:", email);
 
     const data = await resend.emails.send({
-      from: "Zerodha <no-reply@papertrading.site>",
+      from: "Zerodha <no-reply@mail.papertrading.site>",
       to: email,
       subject: "Reset your Zerodha password",
       html: `

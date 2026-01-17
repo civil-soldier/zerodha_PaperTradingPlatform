@@ -7,7 +7,7 @@ const sendEmailOtp = async (email, otp) => {
     console.log("📧 Sending OTP via Resend to:", email);
 
     const data = await resend.emails.send({
-      from: "Zerodha <no-reply@papertrading.site>",
+      from: "Zerodha <no-reply@mail.papertrading.site>",
       to: email,
       subject: "Your Zerodha Email OTP",
       html: `
