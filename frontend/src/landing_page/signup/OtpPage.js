@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import OtpInput from "./OtpInput";
 import axios from "../../api/api";
+import { useEffect } from "react";
 
 function OtpPage({ type = "mobile" }) {
   const [otp, setOtp] = useState(Array(6).fill(""));
@@ -14,87 +15,96 @@ function OtpPage({ type = "mobile" }) {
   const mobile = location.state?.mobile;
   const email = location.state?.email;
 
-  // 🔐 Route protection
-  if (type === "mobile" && !mobile) {
-    navigate("/signup");
-    return null;
-  }
+   // SHORT-CIRCUIT: if already logged in, never stay on OTP
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/account/active", { replace: true });
+    }
+  }, [navigate]);
 
-  if (type === "email" && !mobile) {
-    navigate("/signup");
-    return null;
-  }
+  //  ROUTE GUARD (only when NOT logged in)
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) return;
+
+    if (type === "mobile" && !mobile) {
+      navigate("/signup", { replace: true });
+    }
+
+    if (type === "email" && !mobile) {
+      navigate("/signup", { replace: true });
+    }
+  }, [type, mobile, navigate]);
 
   const otpComplete = otp.every((d) => d !== "");
 
-const handleVerifyOtp = async () => {
-  try {
-    let url = "";
-    let payload = {};
+  const handleVerifyOtp = async () => {
+    try {
+      let url = "";
+      let payload = {};
 
-    if (type === "mobile") {
-      url = "/auth/verify-mobile-otp";
-      payload = { mobile, otp: otp.join("") };
-    } else {
-      url = "/auth/verify-email-otp";
-      payload = { mobile, otp: otp.join("") };
-    }
-
-    const res = await axios.post(url, payload);
-
-    if (!res.data.success) return;
-
-    // 🔥 MOBILE OTP DECISION POINT
-    if (type === "mobile") {
-      localStorage.setItem("signup_mobile", mobile);
-
-      if (res.data.userType === "OLD_USER") {
-        localStorage.setItem("token", res.data.token);
-navigate("/account/active");
-        return;
+      if (type === "mobile") {
+        url = "/auth/verify-mobile-otp";
+        payload = { mobile, otp: otp.join("") };
+      } else {
+        url = "/auth/verify-email-otp";
+        payload = { mobile, otp: otp.join("") };
       }
 
-      if (
-        res.data.userType === "NEW_USER" ||
-        res.data.userType === "INCOMPLETE_USER"
-      ) {
-       
-        if (res.data.userType === "NEW_USER") {
-  navigate("/signup/email", { state: { mobile } });
-  return;
-}
+      const res = await axios.post(url, payload);
 
-if (res.data.userType === "INCOMPLETE_USER") {
-  if (res.data.nextStep === 3) {
-    navigate("/signup/email-otp", { state: { mobile } });
-    return;
-  }
+      if (!res.data.success) return;
 
-  if (res.data.nextStep === 4) {
-    navigate("/signup/details", { state: { mobile } });
-    return;
-  }
+      // 🔥 MOBILE OTP DECISION POINT
+      if (type === "mobile") {
+        localStorage.setItem("signup_mobile", mobile);
 
-  if (res.data.nextStep === 5) {
-    navigate("/signup/credentials", { state: { mobile } });
-    return;
-  }
-}
+        if (res.data.userType === "OLD_USER") {
+          localStorage.setItem("token", res.data.token);
+          navigate("/account/active");
+          return;
+        }
 
-        return;
+        if (
+          res.data.userType === "NEW_USER" ||
+          res.data.userType === "INCOMPLETE_USER"
+        ) {
+          if (res.data.userType === "NEW_USER") {
+            navigate("/signup/email", { state: { mobile } });
+            return;
+          }
+
+          if (res.data.userType === "INCOMPLETE_USER") {
+            if (res.data.nextStep === 3) {
+              navigate("/signup/email-otp", { state: { mobile } });
+              return;
+            }
+
+            if (res.data.nextStep === 4) {
+              navigate("/signup/details", { state: { mobile } });
+              return;
+            }
+
+            if (res.data.nextStep === 5) {
+              navigate("/signup/credentials", { state: { mobile } });
+              return;
+            }
+          }
+
+          return;
+        }
       }
-    }
 
-    // 🔥 EMAIL OTP FLOW (UNCHANGED)
-    if (type === "email") {
-      localStorage.setItem("signup_email", email);
-      navigate("/signup/details", { state: { mobile } });
+      // 🔥 EMAIL OTP FLOW (UNCHANGED)
+      if (type === "email") {
+        localStorage.setItem("signup_email", email);
+        navigate("/signup/details", { state: { mobile } });
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || "OTP verification failed");
     }
-  } catch (err) {
-    setError(err.response?.data?.message || "OTP verification failed");
-  }
-};
-
+  };
 
   const getBgColor = () => {
     if (!otpComplete) return "#ccc";
