@@ -30,16 +30,19 @@ function Education() {
             Varsity, the largest online stock market education book in the world
             covering everything from the basics to advanced trading.
           </p>
-          <a
-            href="#"
+          <button
+            type="button"
             style={{
+              background: "none",
+              border: "none",
+              padding: 0,
               fontSize: "17px",
-              textDecoration: "none",
               color: "#387ed1",
+              cursor: "pointer",
             }}
           >
             Varsity <i className="fa-solid fa-arrow-right-long"></i>
-          </a>
+          </button>
           <p
             style={{
               marginTop: "30px",
@@ -51,17 +54,20 @@ function Education() {
             TradingQ&A, the most active trading and investment community in
             India for all your market related queries.
           </p>
-          <a
-            href="#"
+          <button
+            type="button"
             style={{
+              background: "none",
+              border: "none",
+              padding: 0,
               fontSize: "17px",
-              textDecoration: "none",
               color: "#387ed1",
+              cursor: "pointer",
               marginTop: "10px",
             }}
           >
             TradingQ&A <i className="fa-solid fa-arrow-right-long"></i>
-          </a>
+          </button>
         </div>
       </div>
     </div>

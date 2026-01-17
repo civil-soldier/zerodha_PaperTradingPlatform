@@ -26,16 +26,19 @@ function Pricing() {
             in India. Flat fees and no hidden charges.
           </p>
 
-          <a
-            href="#"
+          <button
+            type="button"
             style={{
+              background: "none",
+              border: "none",
+              padding: 0,
               fontSize: "18px",
-              textDecoration: "none",
               color: "#387ed1",
+              cursor: "pointer",
             }}
           >
             See pricing <i className="fa-solid fa-arrow-right-long"></i>
-          </a>
+          </button>
         </div>
 
         {/* RIGHT SIDE ICONS (Perfect Zerodha layout) */}

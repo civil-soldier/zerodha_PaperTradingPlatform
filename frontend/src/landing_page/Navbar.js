@@ -64,7 +64,6 @@ function Navbar() {
       {/* Navbar HTML */}
       <nav className="navbar navbar-expand-lg navbar-light zerodha-nav p-2">
         <div className="container-fluid zerodha-container">
-
           {/* Logo */}
           <Link className="navbar-brand" to={"/"}>
             <img src="media/images/logo.svg" alt="Logo" />
@@ -73,59 +72,67 @@ function Navbar() {
           {/* Navbar Items */}
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-
               <li className="nav-item">
-                <Link className="nav-link" to={"/signup"}>Signup</Link>
+                <Link className="nav-link" to={"/signup"}>
+                  Signup
+                </Link>
               </li>
 
               <li className="nav-item">
-                <Link className="nav-link" to={"/about"}>About</Link>
+                <Link className="nav-link" to={"/about"}>
+                  About
+                </Link>
               </li>
 
               <li className="nav-item">
-                <Link className="nav-link" to={"/product"}>Products</Link>
+                <Link className="nav-link" to={"/product"}>
+                  Products
+                </Link>
               </li>
 
               <li className="nav-item">
-                <Link className="nav-link" to={"/pricing"}>Pricing</Link>
+                <Link className="nav-link" to={"/pricing"}>
+                  Pricing
+                </Link>
               </li>
 
               <li className="nav-item">
-                <Link className="nav-link" to={"/support"}>Support</Link>
+                <Link className="nav-link" to={"/support"}>
+                  Support
+                </Link>
               </li>
+              <li className="nav-item dropdown">
+                <button
+                  className="nav-link dropdown-toggle"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  style={{ background: "none", border: "none" }}
+                >
+                  <i className="fa-solid fa-bars"></i>
+                </button>
 
-                              <li class="nav-item dropdown">
-                  <a
-                    class="nav-link dropdown-toggle"
-                    href="#"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <i className="fa-solid fa-bars"></i>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        Action
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        Another action
-                      </a>
-                    </li>
-                    <li>
-                      <hr class="dropdown-divider" />
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        Something else here
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-
+                <ul className="dropdown-menu">
+                  <li>
+                    <button className="dropdown-item" type="button">
+                      Action
+                    </button>
+                  </li>
+                  <li>
+                    <button className="dropdown-item" type="button">
+                      Another action
+                    </button>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+                  <li>
+                    <button className="dropdown-item" type="button">
+                      Something else here
+                    </button>
+                  </li>
+                </ul>
+              </li>
             </ul>
           </div>
         </div>

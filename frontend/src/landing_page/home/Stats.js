@@ -114,27 +114,35 @@ function Stats() {
           <div className="mt-4 text-end">
             {" "}
             {/* RIGHT aligned like Zerodha */}
-            <a
-              href="#"
+             <button
+              type="button"
               style={{
+                background: "none",
+                border: "none",
+                padding: 0,
                 fontSize: "18px",
                 marginRight: "30px",
-                textDecoration: "none",
+                cursor: "pointer",
+                color: "#387ed1",
               }}
             >
               Explore our products{" "}
               <i className="fa-solid fa-arrow-right-long"></i>
-            </a>
-            <a
-              href="#"
+            </button>
+            <button
+              type="button"
               style={{
+                background: "none",
+                border: "none",
+                padding: 0,
                 fontSize: "18px",
                 marginRight: "90px",
-                textDecoration: "none",
+                cursor: "pointer",
+                color: "#387ed1",
               }}
             >
               Try Kite demo <i className="fa-solid fa-arrow-right-long"></i>
-            </a>
+            </button>
           </div>
         </div>
       </div>
