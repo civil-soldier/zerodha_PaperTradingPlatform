@@ -49,7 +49,8 @@ const handleVerifyOtp = async () => {
       localStorage.setItem("signup_mobile", mobile);
 
       if (res.data.userType === "OLD_USER") {
-        navigate(res.data.redirect);
+        localStorage.setItem("token", res.data.token);
+navigate("/account/active");
         return;
       }
 

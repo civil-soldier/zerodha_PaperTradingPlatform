@@ -20,6 +20,7 @@ import EmailAuth from "./landing_page/signup/EmailAuth";
 import DetailsPage from "./landing_page/signup/DetailsPage";
 import CredentialsPage from "./landing_page/signup/CredentialsPage";
 import AccountActive from "./landing_page/signup/AccountActive";
+import ProtectedRoute from "./ProtectedRoute";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -48,7 +49,14 @@ root.render(
         <Route path="/signup/credentials" element={<CredentialsPage />} />
       </Route>
 
-      <Route path="/account/active" element={<AccountActive />} />
+      <Route
+  path="/account/active"
+  element={
+    <ProtectedRoute>
+      <AccountActive />
+    </ProtectedRoute>
+  }
+/>
 
     </Routes>
   </BrowserRouter>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "../../api/api";
 
 const AccountActive = () => {
   const navigate = useNavigate();
@@ -7,14 +8,29 @@ const AccountActive = () => {
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
 
-
-  // ✅ ONLY read data, NO redirect logic
   useEffect(() => {
-    const storedName = localStorage.getItem("user_name");
-    setName(storedName || "");
-  }, []);
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem("token");
 
-  // ✅ Stable dropdown (ONLY closes on outside click)
+        const res = await axios.get("/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setName(res.data.user.name);
+      } catch (err) {
+        console.error("Auth error", err);
+        localStorage.removeItem("token");
+        navigate("/signup");
+      }
+    };
+
+    fetchUser();
+  }, [navigate]);
+
+  // Stable dropdown (ONLY closes on outside click)
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -28,15 +44,15 @@ const AccountActive = () => {
     };
   }, []);
 
-  // 👇 First name
+  //First name
   const firstName = name ? name.split(" ")[0] : "User";
 
   const toggleDropdown = (e) => {
-    e.stopPropagation(); // 🔥 prevents document click
+    e.stopPropagation();
     setOpen((prev) => !prev);
   };
 
-  // 👇 Initials
+  // Initials
   const initials = name
     ? name
         .split(" ")
@@ -45,9 +61,9 @@ const AccountActive = () => {
         .toUpperCase()
     : "U";
 
-const handleLogin = () => {
-  window.location.href = `${process.env.REACT_APP_DASHBOARD_URL}/login`;
-};
+  const handleLogin = () => {
+    window.location.href = `${process.env.REACT_APP_DASHBOARD_URL}/login`;
+  };
 
   return (
     <div className="account-active-wrapper">
@@ -61,32 +77,29 @@ const handleLogin = () => {
 
         {/* USER MENU */}
         <div className="user-menu" ref={menuRef}>
-  <div className="user-trigger" onClick={toggleDropdown}>
-    <div className="avatar">{initials}</div>
-    <span className="username">{firstName}</span>
-    <span className={`arrow ${open ? "rotate" : ""}`}>▾</span>
-  </div>
+          <div className="user-trigger" onClick={toggleDropdown}>
+            <div className="avatar">{initials}</div>
+            <span className="username">{firstName}</span>
+            <span className={`arrow ${open ? "rotate" : ""}`}>▾</span>
+          </div>
 
-  {open && (
-    <div className="dropdown">
-      <p className="dropdown-name">{name}</p>
+          {open && (
+            <div className="dropdown">
+              <p className="dropdown-name">{name}</p>
 
-      <button onClick={() => navigate("/support")}>
-        Need help?
-      </button>
+              <button onClick={() => navigate("/support")}>Need help?</button>
 
-      <button
-        onClick={() => {
-          localStorage.clear();
-          navigate("/");
-        }}
-      >
-        Logout
-      </button>
-    </div>
-  )}
-</div>
-
+              <button
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  navigate("/");
+                }}
+              >
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
       </header>
 
       <section className="content-section">
@@ -105,11 +118,7 @@ const handleLogin = () => {
 
             <p className="welcome">Welcome aboard, and happy investing!</p>
 
-            <button
-              className="login-btn"
-              onClick={handleLogin}
-
-            >
+            <button className="login-btn" onClick={handleLogin}>
               <img
                 src="/media/images/logo.png"
                 style={{
@@ -150,7 +159,7 @@ const handleLogin = () => {
             {/* Right illustration */}
             <div className="varsity-right">
               <img
-                src="/media/images/vlive.svg" // V icon + circular lines
+                src="/media/images/vlive.svg"
                 alt="varsity"
                 className="varsity-illustration"
               />
