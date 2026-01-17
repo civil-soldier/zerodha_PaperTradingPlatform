@@ -60,11 +60,14 @@ function OtpPage({ type = "mobile" }) {
       if (type === "mobile") {
         localStorage.setItem("signup_mobile", mobile);
 
-        if (res.data.userType === "OLD_USER") {
-          localStorage.setItem("token", res.data.token);
-          navigate("/account/active");
-          return;
-        }
+       if (res.data.userType === "OLD_USER") {
+  localStorage.setItem("token", res.data.token);
+
+  // 🔥 HARD RESET — jaise pehle hota tha
+  window.location.href = "/account/active";
+  return;
+}
+
 
         if (
           res.data.userType === "NEW_USER" ||
