@@ -17,18 +17,13 @@ const CredentialsPage = () => {
 
   // 🔒 ROUTE GUARD (SAFE)
   useEffect(() => {
-  if (guardRan.current) return;
-  guardRan.current = true;
-
   const token = localStorage.getItem("token");
 
-  // HARD BLOCK — OLD USER
   if (token) {
     navigate("/account/active", { replace: true });
     return;
   }
 
-  //  Signup flow protection
   if (!localStorage.getItem("signup_mobile")) {
     navigate("/signup", { replace: true });
   }

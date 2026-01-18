@@ -61,16 +61,10 @@ function OtpPage({ type = "mobile" }) {
         localStorage.setItem("signup_mobile", mobile);
 
         if (res.data.userType === "OLD_USER") {
-          //  CLEAR ALL SIGNUP STATE
-          localStorage.removeItem("signup_mobile");
-          localStorage.removeItem("signup_email");
-          localStorage.removeItem("account_activated");
-
-          //  SET AUTH STATE
+          localStorage.clear(); // 🔥 NUCLEAR RESET
           localStorage.setItem("token", res.data.token);
 
-          //  HARD NAVIGATION (bypass React guards)
-          window.location.href = "/account/active";
+          window.location.replace("/account/active");
           return;
         }
 

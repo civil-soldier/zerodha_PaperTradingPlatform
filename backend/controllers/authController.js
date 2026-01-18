@@ -73,13 +73,9 @@ const verifyMobileOtp = async (req, res) => {
    * - password exists
    */
 // 🔥 OLD USER — credentials already exist
-if (user.username && user.password) {
-
-  // ✅ HARD FIX: normalize completed users
-  if (user.signupStep !== 5) {
-    user.signupStep = 5;
-    await user.save();
-  }
+if (user.isEmailVerified && user.username && user.password) {
+  user.signupStep = 5;              // 🔥 FORCE FINAL STATE
+  await user.save();
 
   const token = jwt.sign(
     { userId: user._id },
@@ -93,7 +89,6 @@ if (user.username && user.password) {
     token,
   });
 }
-
 
   /**
    *  BRAND NEW USER
