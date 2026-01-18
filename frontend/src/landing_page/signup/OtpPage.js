@@ -15,7 +15,7 @@ function OtpPage({ type = "mobile" }) {
   const mobile = location.state?.mobile;
   const email = location.state?.email;
 
-   // SHORT-CIRCUIT: if already logged in, never stay on OTP
+  // SHORT-CIRCUIT: if already logged in, never stay on OTP
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -56,18 +56,23 @@ function OtpPage({ type = "mobile" }) {
 
       if (!res.data.success) return;
 
-      // 🔥 MOBILE OTP DECISION POINT
+      //  MOBILE OTP DECISION POINT
       if (type === "mobile") {
         localStorage.setItem("signup_mobile", mobile);
 
-       if (res.data.userType === "OLD_USER") {
-  localStorage.setItem("token", res.data.token);
+        if (res.data.userType === "OLD_USER") {
+          //  CLEAR ALL SIGNUP STATE
+          localStorage.removeItem("signup_mobile");
+          localStorage.removeItem("signup_email");
+          localStorage.removeItem("account_activated");
 
-  // 🔥 HARD RESET — jaise pehle hota tha
-  window.location.href = "/account/active";
-  return;
-}
+          //  SET AUTH STATE
+          localStorage.setItem("token", res.data.token);
 
+          //  HARD NAVIGATION (bypass React guards)
+          window.location.href = "/account/active";
+          return;
+        }
 
         if (
           res.data.userType === "NEW_USER" ||
@@ -99,7 +104,7 @@ function OtpPage({ type = "mobile" }) {
         }
       }
 
-      // 🔥 EMAIL OTP FLOW (UNCHANGED)
+      // EMAIL OTP FLOW (UNCHANGED)
       if (type === "email") {
         localStorage.setItem("signup_email", email);
         navigate("/signup/details", { state: { mobile } });
