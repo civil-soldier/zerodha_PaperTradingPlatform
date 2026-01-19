@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../../api/api";
 
 const AccountActive = () => {
   const navigate = useNavigate();
@@ -8,27 +7,10 @@ const AccountActive = () => {
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const token = localStorage.getItem("token");
-
-        const res = await axios.get("/me", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        setName(res.data.user.name);
-      } catch (err) {
-        console.error("Auth error", err);
-        localStorage.removeItem("token");
-        navigate("/signup");
-      }
-    };
-
-    fetchUser();
-  }, [navigate]);
+    useEffect(() => {
+    const storedName = localStorage.getItem("user_name");
+    setName(storedName || "");
+  }, []);
 
   // Stable dropdown (ONLY closes on outside click)
   useEffect(() => {

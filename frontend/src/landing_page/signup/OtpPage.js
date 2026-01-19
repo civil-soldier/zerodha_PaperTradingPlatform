@@ -15,19 +15,15 @@ function OtpPage({ type = "mobile" }) {
   const mobile = location.state?.mobile;
   const email = location.state?.email;
 
-  //  ROUTE GUARD (only when NOT logged in)
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) return;
+if (type === "mobile" && !mobile) {
+    navigate("/signup");
+    return null;
+  }
 
-    if (type === "mobile" && !mobile) {
-      navigate("/signup", { replace: true });
-    }
-
-    if (type === "email" && !email) {
-      navigate("/signup", { replace: true });
-    }
-  }, [type, mobile, email, navigate]);
+  if (type === "email" && !mobile) {
+    navigate("/signup");
+    return null;
+  }
 
   const otpComplete = otp.every((d) => d !== "");
 
@@ -53,9 +49,7 @@ function OtpPage({ type = "mobile" }) {
         localStorage.setItem("signup_mobile", mobile);
 
         if (res.data.userType === "OLD_USER") {
-          localStorage.clear();
-          localStorage.setItem("token", res.data.token);
-          window.location.replace("/account/active");
+          navigate(res.data.redirect);
           return;
         }
 

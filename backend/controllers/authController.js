@@ -43,15 +43,11 @@ const verifyMobileOtp = async (req, res) => {
   const { mobile, otp } = req.body;
 
   if (otp !== "000000") {
-    return res.status(400).json({
-      success: false,
-      message: "Invalid OTP",
-    });
+    return res.status(400).json({ success: false, message: "Invalid OTP" });
   }
 
   let user = await UserModel.findOne({ mobile });
 
-  // Safety: create user if not exists
   if (!user) {
     user = await UserModel.create({
       mobile,
@@ -61,50 +57,24 @@ const verifyMobileOtp = async (req, res) => {
     });
   }
 
-  // Always mark mobile verified
   user.isMobileVerified = true;
   await user.save();
 
-  /**
-   * OLD USER (completed signup earlier)
-   * Criteria:
-   * - email verified
-   * - username exists
-   * - password exists
-   */
-// 🔥 OLD USER — credentials already exist
-if (user.isEmailVerified && user.username && user.password) {
-  user.signupStep = 5;              // 🔥 FORCE FINAL STATE
-  await user.save();
-
-  const token = jwt.sign(
-    { userId: user._id },
-    process.env.JWT_SECRET,
-    { expiresIn: "1d" }
-  );
-
-  return res.json({
-    success: true,
-    userType: "OLD_USER",
-    token,
-  });
-}
-
-  /**
-   *  BRAND NEW USER
-   * - no email yet
-   */
-  if (!user.email && !user.isEmailVerified) {
+  if (user.signupStep === 1) {
     return res.json({
       success: true,
       userType: "NEW_USER",
     });
   }
 
-  /**
-   * INCOMPLETE USER
-   * - started signup but didn’t finish
-   */
+  if (user.isEmailVerified === true) {
+    return res.json({
+      success: true,
+      userType: "OLD_USER",
+      redirect: "/account/active",
+    });
+  }
+
   return res.json({
     success: true,
     userType: "INCOMPLETE_USER",
@@ -129,7 +99,6 @@ const addEmailAndName = async (req, res) => {
       return res.status(403).json({ message: "Verify mobile first" });
     }
 
-    // check email uniqueness
     const emailOwner = await UserModel.findOne({ email });
     if (emailOwner && emailOwner.mobile !== mobile) {
       return res.status(400).json({
@@ -139,10 +108,8 @@ const addEmailAndName = async (req, res) => {
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-    // ✅ SEND EMAIL FIRST
     await sendEmailOtp(email, otp);
 
-    // ✅ SAVE ONLY ON SUCCESS
     user.name = name;
     user.email = email;
     user.emailOtp = otp;
@@ -158,7 +125,6 @@ const addEmailAndName = async (req, res) => {
   }
 };
 
-// STEP 2 VERIFY: EMAIL OTP
 const verifyEmailOtp = async (req, res) => {
   try {
     const { mobile, otp } = req.body;
@@ -173,9 +139,6 @@ const verifyEmailOtp = async (req, res) => {
     if (!user || user.signupStep !== 3) {
       return res.status(404).json({ message: "OTP not found" });
     }
-
-    console.log("ENTERED OTP:", enteredOtp);
-    console.log("DB OTP:", user.emailOtp);
 
     if (String(user.emailOtp).trim() !== enteredOtp) {
       return res.status(400).json({ message: "Invalid OTP" });
@@ -218,7 +181,6 @@ const createCredentials = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // 🔒 Prevent re-setting credentials
     if (user.signupStep >= 5) {
       return res.status(400).json({
         message: "Credentials already set",
@@ -255,55 +217,25 @@ const createCredentials = async (req, res) => {
   }
 };
 
-/**
- * =========================
- * DASHBOARD LOGIN
- * =========================
- * Username + Password → JWT
- */
-
 const login = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    if (!username || !password) {
-      return res.status(400).json({
-        success: false,
-        message: "Username and password required",
-      });
-    }
-
-    // password select:false hai
     const user = await UserModel.findOne({ username }).select("+password");
 
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "Invalid username or password",
-      });
-    }
-
-    // signup completed check
-    if (user.signupStep !== 5) {
-      return res.status(403).json({
-        success: false,
-        message: "Account not active",
-      });
+    if (!user || user.signupStep !== 5) {
+      return res.status(403).json({ success: false });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({
-        success: false,
-        message: "Invalid username or password",
-      });
+      return res.status(401).json({ success: false });
     }
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
 
-    // 🔥 INIT FUNDS IF NOT EXISTS
     const existingFunds = await FundsModel.findOne({
       userId: user._id,
       type: "EQUITY",
@@ -331,50 +263,26 @@ const login = async (req, res) => {
       },
     });
   } catch (err) {
-    console.error("LOGIN ERROR:", err);
-    res.status(500).json({
-      success: false,
-      message: "Server error",
-    });
+    res.status(500).json({ success: false });
   }
 };
 
 const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
-
     const user = await UserModel.findOne({ email });
-    if (!user) {
-      return res
-        .status(404)
-        .json({ message: "User with this email does not exist" });
-    }
-
-    // ⛔ Rate limit: 5 minutes
-    if (
-      user.lastResetEmailAt &&
-      Date.now() - user.lastResetEmailAt.getTime() < 5 * 60 * 1000
-    ) {
-      return res.status(429).json({
-        message: "Please wait 5 minutes before requesting another reset email",
-      });
-    }
 
     const resetToken = crypto.randomBytes(32).toString("hex");
 
     user.resetPasswordToken = resetToken;
     user.resetPasswordExpiry = Date.now() + 15 * 60 * 1000;
-    user.lastResetEmailAt = new Date();
     await user.save();
 
     const resetLink = `https://zerodha-paper-trading-platform.vercel.app/reset-password/${resetToken}`;
-
-    // ✅ correct util usage
     await sendEmail(user.email, resetLink);
 
     res.json({ message: "Password reset link sent to email" });
   } catch (error) {
-    console.error("FORGOT PASSWORD ERROR:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -389,10 +297,6 @@ const resetPassword = async (req, res) => {
       resetPasswordExpiry: { $gt: Date.now() },
     }).select("+password");
 
-    if (!user) {
-      return res.status(400).json({ message: "Invalid or expired reset link" });
-    }
-
     user.password = await bcrypt.hash(password, 10);
     user.resetPasswordToken = undefined;
     user.resetPasswordExpiry = undefined;
@@ -401,7 +305,6 @@ const resetPassword = async (req, res) => {
 
     res.json({ message: "Password reset successful" });
   } catch (error) {
-    console.error("RESET PASSWORD ERROR:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
