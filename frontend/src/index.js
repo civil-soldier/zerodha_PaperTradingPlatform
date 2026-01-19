@@ -46,7 +46,17 @@ root.render(
         <Route path="/signup/email" element={<EmailAuth />} />
         <Route path="/signup/email-otp" element={<OtpPage type="email" />} />
         <Route path="/signup/details" element={<DetailsPage />} />
-        <Route path="/signup/credentials" element={<CredentialsPage />} />
+        <Route
+    path="/signup/credentials"
+    element={
+      localStorage.getItem("signup_mobile") &&
+      !localStorage.getItem("token") ? (
+        <CredentialsPage />
+      ) : (
+        <Navigate to="/account/active" replace />
+      )
+    }
+  />
       </Route>
 
       <Route

@@ -15,14 +15,6 @@ function OtpPage({ type = "mobile" }) {
   const mobile = location.state?.mobile;
   const email = location.state?.email;
 
-  // SHORT-CIRCUIT: if already logged in, never stay on OTP
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      navigate("/account/active", { replace: true });
-    }
-  }, [navigate]);
-
   //  ROUTE GUARD (only when NOT logged in)
   useEffect(() => {
     const token = localStorage.getItem("token");
