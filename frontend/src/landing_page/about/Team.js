@@ -143,7 +143,7 @@ function Team() {
 
         {/* ---------- Team Member 6 ---------- */}
         <div className="col-4 d-flex flex-column align-items-center mb-5 member">
-          <img src="/media/images/Karthik.jpg" alt="Karthik Rangappa" />
+          <img src="/media/images/karthik.jpg" alt="Karthik Rangappa" />
           <h3 className="mt-3">Karthik Rangappa</h3>
           <p className="role">Chief of Education</p>
 

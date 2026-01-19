@@ -13,27 +13,22 @@ const CredentialsPage = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-  const guardRan = useRef(false); // ✅ ADD THIS
+  const guardRan = useRef(false); //  ADD THIS
 
   // 🔒 ROUTE GUARD (SAFE)
  useEffect(() => {
   const token = localStorage.getItem("token");
 
-  // 🚫 OLD USER — NEVER ALLOW
+  //  OLD USER — NEVER ALLOW
   if (token) {
     navigate("/account/active", { replace: true });
     return;
   }
 
-  const mobile = localStorage.getItem("signup_mobile");
-
-  // 🚫 INVALID SIGNUP STATE
-  if (!mobile) {
+  if (!localStorage.getItem("signup_mobile")) {
     navigate("/signup", { replace: true });
   }
 }, [navigate]);
-
-
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });

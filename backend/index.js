@@ -267,7 +267,7 @@ app.post("/newOrder", authMiddleware, async (req, res) => {
       });
     }
 
-    // ================== 🔥 FUNDS FETCH (PASTE HERE) 🔥 ==================
+    // ==================  FUNDS FETCH (PASTE HERE)  ==================
     const equityFunds = await FundsModel.findOne({
       userId: req.user._id,
       type: "EQUITY",

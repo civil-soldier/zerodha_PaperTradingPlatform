@@ -61,12 +61,8 @@ function OtpPage({ type = "mobile" }) {
         localStorage.setItem("signup_mobile", mobile);
 
         if (res.data.userType === "OLD_USER") {
-          //  DO NOT clear everything
-          localStorage.removeItem("signup_mobile");
-          localStorage.removeItem("signup_email");
-
+          localStorage.clear();
           localStorage.setItem("token", res.data.token);
-
           window.location.replace("/account/active");
           return;
         }
