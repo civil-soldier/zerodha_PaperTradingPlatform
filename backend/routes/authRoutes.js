@@ -11,6 +11,7 @@ const {
   login,
   forgotPassword,
   resetPassword,
+  getAccountActiveUser,
 } = require("../controllers/authController");
 
 router.post("/mobile", sendMobileOtp);
@@ -21,5 +22,6 @@ router.post("/credentials", createCredentials);
 router.post("/login", login);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password/:token", resetPassword);
+router.get("/account-active/:mobile", getAccountActiveUser);
 
 module.exports = router;

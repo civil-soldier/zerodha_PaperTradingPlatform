@@ -309,6 +309,41 @@ const resetPassword = async (req, res) => {
   }
 };
 
+/* =========================
+   ACCOUNT ACTIVE USER (MOBILE BASED)
+========================= */
+const getAccountActiveUser = async (req, res) => {
+  try {
+    const { mobile } = req.params;
+
+    if (!mobile) {
+      return res.status(400).json({
+        success: false,
+        message: "Mobile required",
+      });
+    }
+
+    const user = await UserModel.findOne({ mobile }).select(
+      "name username email"
+    );
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    res.json({
+      success: true,
+      user,
+    });
+  } catch (err) {
+    console.error("ACCOUNT ACTIVE FETCH ERROR:", err);
+    res.status(500).json({ success: false });
+  }
+};
+
 module.exports = {
   sendMobileOtp,
   verifyMobileOtp,
@@ -318,4 +353,5 @@ module.exports = {
   login,
   forgotPassword,
   resetPassword,
+  getAccountActiveUser,
 };
