@@ -8,11 +8,19 @@ const AccountActive = () => {
   const [name, setName] = useState("");
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
-  const mobile = location.state?.mobile || localStorage.getItem("mobile");
+  const [mobile, setMobile] = useState(null);
+
+  useEffect(() => {
+  const m = location.state?.mobile || localStorage.getItem("mobile");
+  if (m) {
+    setMobile(m);
+  } else {
+    navigate("/signup");
+  }
+}, [location.state, navigate]);
 
   useEffect(() => {
   if (!mobile) {
-    navigate("/signup");
     return;
   };
 
