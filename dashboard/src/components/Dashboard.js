@@ -16,7 +16,6 @@ import { GeneralContextProvider } from "./GeneralContext";
 const Dashboard = () => {
   return (
     <div className="dashboard-container">
-      <GeneralContextProvider>
         <WatchList />
         <div className="content">
         <Routes>
@@ -28,8 +27,6 @@ const Dashboard = () => {
           <Route path="apps" element={<Apps />} />
         </Routes>
       </div>
-      </GeneralContextProvider>
-
     </div>
   );
 };
