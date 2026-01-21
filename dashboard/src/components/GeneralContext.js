@@ -66,15 +66,21 @@ export const GeneralContextProvider = (props) => {
     setOrders(res.data);
   };
 
-  const fetchUser = async () => {
+const fetchUser = async () => {
   try {
-    const res = await axios.get("/profile/me");
+    const res = await axios.get("/profile/me", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
     setUser(res.data.user);
   } catch (err) {
-    console.error("Fetch user failed");
+    console.error("Fetch user failed", err);
     setUser(null);
   }
 };
+
 
   useEffect(() => {
     fetchHoldings();
