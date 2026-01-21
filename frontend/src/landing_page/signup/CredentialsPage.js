@@ -53,7 +53,7 @@ const CredentialsPage = () => {
       if (res.data.success) {
         localStorage.setItem("user_name", username);
         localStorage.setItem("account_activated", "true");
-        navigate("/account/active");
+        navigate("/account/active", { state: { mobile } });
       }
     } catch (err) {
       setError(err.response?.data?.message || "Signup failed");

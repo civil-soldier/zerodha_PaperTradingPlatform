@@ -15,19 +15,21 @@ const AccountActive = () => {
     navigate("/signup");
     return;
   }
+}, [mobile, navigate]);
 
-const fetchUser = async () => {
-      try {
-        const res = await axios.get(`/auth/account-active/${mobile}`);
-        setName(res.data.user.name);
-      } catch (err) {
-        console.error("Failed to fetch account active user", err);
-        navigate("/signup");
-      }
-    };
+useEffect(() => {
+  const fetchUser = async () => {
+    try {
+      const res = await axios.get(`/auth/account-active/${mobile}`);
+      setName(res.data.user.name);
+    } catch (err) {
+      console.error("Failed to fetch account active user", err);
+      navigate("/signup");
+    }
+  };
 
-    fetchUser();
-  }, [mobile, navigate]);
+  fetchUser();
+}, [mobile, navigate]);
 
   // Stable dropdown (ONLY closes on outside click)
   useEffect(() => {
