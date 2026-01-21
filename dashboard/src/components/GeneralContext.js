@@ -22,6 +22,7 @@ export const GeneralContextProvider = (props) => {
   const [positions, setPositions] = useState([]);
   const [funds, setFunds] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [user, setUser] = useState(null);
 
   const handleOpenBuyWindow = (uid) => {
     setIsBuyWindowOpen(true);
@@ -65,16 +66,28 @@ export const GeneralContextProvider = (props) => {
     setOrders(res.data);
   };
 
+  const fetchUser = async () => {
+  try {
+    const res = await axios.get("/user/me");
+    setUser(res.data.user);
+  } catch (err) {
+    console.error("Fetch user failed");
+    setUser(null);
+  }
+};
+
   useEffect(() => {
     fetchHoldings();
     fetchPositions();
     fetchFunds();
     fetchOrders();
+    fetchUser();
   }, []);
 
   return (
     <GeneralContext.Provider
       value={{
+        user,
         openBuyWindow: handleOpenBuyWindow,
         closeBuyWindow: handleCloseBuyWindow,
         openSellWindow: handleOpenSellWindow,

@@ -1,17 +1,18 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useMemo , useState , useEffect} from "react";
 import GeneralContext from "./GeneralContext";
 import MarketLineChart from "./MarketLineChart";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { LANDING_URL } from "../config";
 
 const Summary = () => {
   // ✅ FIX: default to empty array
-  const { holdings = [] } = useContext(GeneralContext);
+  const { holdings = [] , user } = useContext(GeneralContext);
 
   const { totalInvestment, currentValue, totalPnL, pnlPercent } =
     useMemo(() => {
       const investment = holdings.reduce((sum, h) => sum + h.avg * h.qty, 0);
-
       const value = holdings.reduce((sum, h) => sum + h.price * h.qty, 0);
-
       const pnl = value - investment;
       const percent = investment > 0 ? (pnl / investment) * 100 : 0;
 
@@ -31,7 +32,7 @@ const Summary = () => {
     <>
       <div className="data-card">
         <div className="username">
-          <h6>Hi, User!</h6>
+          <h6>Hi, {user?.name || "User"}!</h6>
           <hr className="divider" />
         </div>
 

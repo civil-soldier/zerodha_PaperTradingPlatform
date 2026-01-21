@@ -7,7 +7,7 @@ const User = require("../model/UserModel");
 // 🔥 GET LOGGED IN USER
 router.get("/me", authMiddleware, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select("name");
+    const user = await User.findById(req.user._id).select("name");
 
     if (!user) {
       return res.status(404).json({ success: false });
