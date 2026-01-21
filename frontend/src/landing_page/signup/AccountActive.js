@@ -9,20 +9,22 @@ const AccountActive = () => {
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
   const [mobile, setMobile] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+ useEffect(() => {
   const m = location.state?.mobile || localStorage.getItem("mobile");
+
   if (m) {
     setMobile(m);
   } else {
     navigate("/signup");
   }
+
+  setLoading(false);
 }, [location.state, navigate]);
 
   useEffect(() => {
-  if (!mobile) {
-    return;
-  };
+  if (loading || !mobile) return;
 
   const fetchUser = async () => {
     try {
@@ -35,7 +37,7 @@ const AccountActive = () => {
   };
 
   fetchUser();
-}, [mobile, navigate]);
+}, [mobile, loading, navigate]);
 
   // Stable dropdown (ONLY closes on outside click)
   useEffect(() => {
