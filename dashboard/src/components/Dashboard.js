@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 
 import Bids from "./bids/Bids";
-
 import Funds from "./Funds";
 import Holdings from "./Holdings";
 
