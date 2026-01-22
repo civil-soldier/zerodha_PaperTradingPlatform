@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Bids.css";
+import "./bids.css";
 import IpoList from "./IpoList";
 
 const Bids = () => {
