@@ -1,17 +1,24 @@
 import React, { useState } from "react";
 import "./bids.css";
 import IpoList from "./IpoList";
+import GovtSecuritiesList from "./GovtSecuritiesList";
+
+const EmptyState = ({ title, subtitle }) => (
+  <div className="empty-state">
+    <p className="empty-title">{title}</p>
+    {subtitle && <p className="empty-sub">{subtitle}</p>}
+  </div>
+);
 
 const Bids = () => {
   const [activeTab, setActiveTab] = useState("ipo");
 
   return (
-    <div className="bids-container">
-      <h1 className="bids-title">Bids</h1>
+    <div className="data-card">
+      <h1 className="bids-title">IPOs</h1>
 
       {/* Tabs */}
-      <div className="bid
-      s-tabs">
+      <div className="bids-tabs">
         {["ipo", "govt", "auctions", "corporate", "sse"].map((tab) => (
           <button
             key={tab}
@@ -23,14 +30,29 @@ const Bids = () => {
         ))}
       </div>
 
-      {/* Content */}
-      <div className="bids-content">
+      {/* Table / Content Card */}
+      <div className="table-card">
         {activeTab === "ipo" && <IpoList />}
+        {activeTab === "govt" && <GovtSecuritiesList />}
 
-        {activeTab !== "ipo" && (
-          <div className="empty-state">
-            <p>No data available</p>
-          </div>
+        {activeTab === "auctions" && (
+          <EmptyState
+            title="There are no stocks for auctions yet."
+            subtitle="The auction market opens at 2:30 PM. Stocks eligible to be sold in the auction will be listed here."
+          />
+        )}
+
+        {activeTab === "corporate" && (
+          <EmptyState
+            title="There are no open corporate actions right now."
+          />
+        )}
+
+        {activeTab === "sse" && (
+          <EmptyState
+            title="No active Social Stock Exchange (SSE) issues."
+            subtitle="SSE allows non-profits to raise funds for their causes."
+          />
         )}
       </div>
     </div>

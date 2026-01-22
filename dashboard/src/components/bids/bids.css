@@ -5,6 +5,9 @@
 
 .bids-title {
   margin-bottom: 16px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
 }
 
 .bids-tabs {
@@ -38,3 +41,197 @@
   color: #777;
   padding: 60px 0;
 }
+
+.data-card {
+  width: 100%;
+  min-height: calc(100vh - 14vh);
+  background: linear-gradient(180deg, #1b1f24, #15181c);
+  border-radius: 14px;
+  padding: 30px 40px;
+  box-sizing: border-box;
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.6),
+    inset 0 0 0 1px #2a2f36;
+}
+
+.table-card {
+  background: linear-gradient(180deg, #1b1f24, #15181c);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.6),
+    inset 0 0 0 1px #2a2f36;
+}
+
+.ipo-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #e5e5e5;
+  font-size: 14px;
+}
+
+.ipo-table thead th {
+  text-align: left;
+  color: #f5c842;
+  font-weight: 500;
+  padding: 14px 10px;
+  border-bottom: 1px solid #2a2f36;
+}
+
+.ipo-table tbody tr {
+  border-bottom: 1px solid #222831;
+}
+
+.ipo-table tbody tr:hover {
+  background: #1e2329;
+}
+
+.ipo-table td {
+  padding: 16px 10px;
+  vertical-align: middle;
+}
+
+.ipo-name {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.ipo-sub {
+  font-size: 12px;
+  color: #8b949e;
+  margin-top: 4px;
+}
+
+.apply-btn {
+  background: #4184f3; /* Zerodha blue */
+  border: none;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.apply-btn:hover {
+  background: #2f6fe4;
+}
+
+.closed-btn {
+  background: #2a2f36;
+  border: none;
+  color: #777;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: not-allowed;
+}
+
+.row-disabled {
+  opacity: 0.6;
+}
+
+.table-card {
+  background: linear-gradient(180deg, #1b1f24, #15181c);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: inset 0 0 0 1px #2a2f36;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.orders-table th {
+  color: #f5c542;
+  text-align: left;
+  padding: 12px 8px;
+  font-weight: 500;
+}
+
+.orders-table td {
+  padding: 14px 8px;
+  border-top: 1px solid #2a2f36;
+  color: #d0d4dc;
+}
+
+.row-disabled {
+  opacity: 0.5;
+}
+
+.apply-btn {
+  background: #387ed1;
+  border: none;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.apply-btn.disabled {
+  background: #444;
+  cursor: not-allowed;
+}
+
+.badge {
+  background: rgba(120, 90, 255, 0.15);
+  color: #9b8cff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.empty-state {
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9aa0aa;
+  font-size: 14px;
+}
+
+.table-card {
+  background: #0f141b;
+  border-radius: 12px;
+  padding: 28px;
+  min-height: 360px;
+  box-shadow: inset 0 0 0 1px #2a2f36;
+}
+
+.empty-state {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #9aa4af;
+  text-align: center;
+}
+
+.empty-title {
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.empty-sub {
+  font-size: 13px;
+  color: #6b7280;
+  max-width: 420px;
+}
+
+.gsec-badge {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.muted {
+  color: #6b7280;
+}
+
+
